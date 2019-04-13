@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  
+  
+  <title>  机器学习————————正态分布 |   Jacobi </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+
+
+  <link rel="stylesheet" href="/nayo.min.css"> 
+</head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link" id="menu-home" href="/">
+          <i class="iconfont icon-home">
+        </i></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link" id="menu-archives" href="/archives">
+          <i class="iconfont icon-archives">
+        </i></a>
+      </li>
+      
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			机器学习————————正态分布
+		</p>
+		<div class="info">	
+			<time>
+				Apr 13, 2019
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">2117
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><p>　　正态分布（Normal distribution），或者说高斯分布（Gussian distribution），是机器学习中绝对无法避免的的一个问题。我倾向于认为它是机器学习中最重要的分布。首先我们先将它的定义放在最前面以示尊重。</p>
+<blockquote>
+<p>如果D维变量$x$服从一个数学期望为\mu 协方差矩阵为\Sigma 的正态分布，记为：</p>
+<script type="math/tex; mode=display">
+x\sim \mathcal{N}(\mu, \Sigma)</script><p>其概率密度函数为：</p>
+<script type="math/tex; mode=display">
+f(x) = \frac{1}{\left ( 2\pi  \right )^{\frac{D}{2}}}\frac{1}{\left | \Sigma  \right |^{\frac{1}{2}}}e^{\left \{ -\frac{1}{2}\left ( x-\mu   \right )^{T}\Sigma^{-1} \left ( x-\mu  \right ) \right \}}</script><a id="more"></a>
+</blockquote>
+<p><img src="/2019/04/13/机器学习————————正态分布/二维正态分布.jpg" alt="二维正态分布" title="二维正态分布"> </p>
+<p>　　由于机器学习中特征通常为高维向量，所以我们通常使用高维正态分布。</p>
+<h3 id="正态分布的普遍性"><a href="#正态分布的普遍性" class="headerlink" title="正态分布的普遍性"></a>正态分布的普遍性</h3><p>　　正态分布是一个种非常常见的分布，连大学里的老师都通常被要求给分服从正态分布(滑稽)。那正态分布究竟为什么这么常见？真正的原因是<strong>中心极限定理(central limit theorem)</strong>。通俗地来讲就是：</p>
+<blockquote>
+<p>“多个独立统计量的平均值，符合正态分布。”</p>
+</blockquote>
+<p>　　根据中心极限定理，如果一个事物受到多种因素影响，不管每个因素本身是什么分布，它们加总后，结果的平均值就是正态分布。</p>
+<p>　　​举例来说一个人的头发数量由很多因素共同影响，比如他是否先天脱发，或是后天营养不良，甚至是他是否是个程序员也影响到他的发量。这些因素对头发的影响是未知的分布，但它们和的平均值服从正态分布。</p>
+<h3 id="机器学习中的正态分布"><a href="#机器学习中的正态分布" class="headerlink" title="机器学习中的正态分布"></a>机器学习中的正态分布</h3><p>　　既然正态分布在自然界中如此常见，那么机器学习中一定有什么地方利用了或者说关联了正态分布。我们不可能无视这么重要的信息。<br>​    </p>
+<p>　　<strong>首先想到的就是数据的预处理。</strong><br>​    </p>
+<p>　　​我们在数据的预处理中经常使用的方法是标准化（normalization）和白化（whitening）。</p>
+<p>　　​对于标准化方法，我们主要讨论Z-score标准化。Z-score标准化的主要流程是：</p>
+<blockquote>
+<p>在每个维度上都减去平均值后得到零中心化数据</p>
+<p>每个维度除以其标准差来调整其数值范围，将其标准差置为1</p>
+</blockquote>
+<p>　　非常明显，我们假设了数据符合高维正态分布，在标准化之后，数据的每一个维度的边缘概率密度服从一维的标准正态分布。<em>（ps：整体高维正态分布并不服从协方差矩阵为 $I $的标准高维正态分布）</em><br>​<br>　　​白化的主要流程：</p>
+<blockquote>
+<p>使用PCA将原始数据投影到相互正交的新的特征基上。经过了处理之后，特征之间的相关性被消除，特征被<strong>解耦合</strong>。</p>
+<p>每个特征维度除以其特征值对数值氛围归一化。</p>
+</blockquote>
+<p>　　白化对于数据的处理更加彻底，并且它也是基于数据的高维正态分布，经过处理之后的数据服从协方差矩阵为单位矩阵，均值为0的高维正态分布。<br>​</p>
+<p>　　我个人认为数据的预处理连接了机器学习的模型以及自然界的各种数据。那么作为两者之间的“路由器”，在进行了预处理之后的数据一定会适应于机器学习的模型。并且，如果数据的正态性是冗余信息，预处理一定会处理掉这部分信息，从而将数据更本质的信息抽取出来（有用的留下，没用的滚开，真是个无情的狼火。<del>“东哥，东哥，我们不是兄弟吗！！”</del>）。然而结果是预处理抛弃了特征的量纲，绝对长度和耦合性，并没有删除正态信息。所以更近了一步，我们认为机器学习的模型一定使用了正态分布的信息，或者说机器学习模型存在一定的设计是基于正态分布的。<br>​    </p>
+<p>　　<strong>正态分布的噪声</strong><br>​    </p>
+<p>　　机器学习永恒的问题——欠拟合和过拟合。我们目前只谈过拟合。过拟合的本质是什么，模型的复杂度过大，导致拟合能力过强，把噪声也拟合进去了（这里我指一切超出了最优模型特征的特征，如汽车的颜色。ps：这也是一个相对的概念，在不同的场景中，最优特征也可能不同）。当前流行的机器学习模型一般都是点估计，然后通过优化找到这个最优参数。当拟合噪声的情况发生时，我们可以联想一下，利用一个具有明确输出的模型，来输出一个带有随机噪声的输出，这明显是不可行的。这就导致了过拟合。扯得有些远了，这里主要想说一下噪声的普遍性，以及噪声的危害。我感觉应该没人会反对噪声的普遍性，目标本身的变化，观测者的误差等等因素导致了噪声是不可避免的东西。<br>​    </p>
+<p>　　虽然我们无法完美地处理噪声，但我们可以利用概率论的相关知识来处理它。</p>
+<p>　　然后我们来考虑线性回归问题。</p>
+<p>　　我们使用$\widehat{t} = w^{T}x$来生成数据并且为其加上噪声$\epsilon $，所以我们的真实值为：</p>
+<script type="math/tex; mode=display">
+t = w^{T}x + \epsilon</script><p>　　我们假设噪声服从零均值正态分布，并且它的精度为$\beta $，它对于应分布方差的倒数。</p>
+<p>　　很明显：</p>
+<script type="math/tex; mode=display">
+p(t) = \mathcal{N}(\widehat{t}, \beta^{-1})</script><p>　　我们希望获得 $y(x,w) = w^{T}x$ 可以拟合 $t$，也就是说：</p>
+<script type="math/tex; mode=display">
+\mathcal{N}(y(x, w), \beta^{-1})\sim \mathcal{N}(\widehat{t}, \beta^{-1})</script><p>​    那么</p>
+  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-link" href="/tags/正态分布，高斯分布/">正态分布，高斯分布</a>
+      
+    </div>
+
+    <div class="operate">
+      
+      <span class="text">Share</span>
+      <ul class="share">
+	   			             
+        <li class="iconfont 
+		icon-share-qq 
+		-mob-share-qq 
+		item"></li>		
+   	   			             
+        <li class="iconfont 
+		icon-share-weixin 
+		-mob-share-weixin 
+		item"></li>		
+   	   			             
+        <li class="iconfont 
+		icon-share-weibo 
+		-mob-share-weibo 
+		item"></li>		
+   	   
+</ul>	
+
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=21d601593a1de"></script>
+      
+    </div>
+  </div>
+
+
+  
+</div> 
+	
+<div class="comment">
+
+    
+
+    <div id="comment">
+    </div>
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+    <script src="//unpkg.com/valine@v1.1.8-beta/dist/Valine.min.js"></script>
+
+    <script>
+        new Valine({
+            el: '#comment',
+            notify: false,
+            verify: false,
+            app_id: 'drY43zo5UYAEbaw3cEog0GtX-gzGzoHsz',
+            app_key: 'UKsTLxEoDbfJQmNVfyweAO4X',
+            path: window.location.pathname,
+            avatar: 'mm',
+            guest_info: ['nick', 'mail']
+        });
+    </script>
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon" src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+      
+</div>
+        
+    
+
+
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			&copy;
+			
+			2019
+			Jacobi
+
+			<br>
+		</div>
+	</div>
+</footer>   
+
+    <script src="/nayo.bundle.js"></script>           
+  </body>        
+</html>
