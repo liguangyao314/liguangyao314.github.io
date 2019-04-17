@@ -73,7 +73,7 @@
 			
 			
 				<i class="iconfont icon-words"></i>
-				<span class="words">3094
+				<span class="words">3098
 				</span>
 			
 		</div>
@@ -142,24 +142,24 @@ f(x) = \frac{1}{\left ( 2\pi  \right )^{\frac{D}{2}}}\frac{1}{\left | \Sigma  \r
 <p>　　机器学习中永恒的焦点问题——欠拟合和过拟合。我们来讨论一下过拟合。过拟合的实质是什么，当模型的复杂度过大，会导致拟合能力过强，把数据的噪声也拟合进去了（这里我指一切超出了最优模型特征的特征，如汽车的颜色。ps：这也是一个相对的概念，在不同的场景中，最优特征也可能不同）。当前流行的机器学习模型一般都是点估计模型，然后通过优化找到这个最优参数点。当拟合噪声的情况发生时，我们可以想象一下，利用一个确定性的模型，来输出随机性的结果，这明显是不可行的。这就导致了过拟合。如下图，数据集由$\sin \left ( 2\pi x \right )$加上随机噪声生成的10个数据点组成，使用9阶多项式来拟合数据集：</p>
 <p><img src="/2019/04/13/机器学习————————正态分布/过拟合.png" alt="过拟合"></p>
 <p>　　扯得有些远了，这里主要想说一下噪声的普遍性，以及噪声的危害。噪声是不可避免的，目标本身的变化，观测者的误差等等因素都会导致噪声的出现。</p>
-<p>　　虽然我们无法完美地避免噪声对模型算法的影响，但我们可以利用概率论的相关知识来处理它。</p>
+<p>　　虽然无法完美地避免噪声对模型算法的影响，但我们可以利用概率论的相关知识来处理它。</p>
 <p>　　我们来考虑线性回归问题。</p>
-<p>　　我们使用$\widehat{t} = w^{T}x$来生成数据并且为其加上噪声$\epsilon $，所以我们的真实值为：</p>
+<p>　　我们使用$\widehat{t} = w^{T}x$来生成数据并且为其加上噪声$\epsilon $，所以数据的真实值为：</p>
 <script type="math/tex; mode=display">
-t = w^{T}x + \epsilon</script><p>　　我们假设噪声服从零均值正态分布，并且它的精度为$\beta $，它对于应分布方差的倒数。</p>
+t = w^{T}x + \epsilon</script><p>　　假设噪声服从零均值正态分布，并且它的精度为$\beta $，它对于应分布方差的倒数。</p>
 <p>　　很明显：</p>
 <script type="math/tex; mode=display">
-p(t) = \mathcal{N}(t\,|\,\widehat{t}, \beta^{-1})</script><p>　　我们希望获得 $y(x,w) = w^{T}x$ 可以拟合 $t$，也就是说：</p>
+p(t) = \mathcal{N}(t\,|\,\widehat{t}, \beta^{-1})</script><p>　　我们希望获得的$y(x,w) = w^{T}x$ 可以拟合 $t$，也就是说：</p>
 <script type="math/tex; mode=display">
-\mathcal{N}(t|y(x, w), \beta^{-1})\sim \mathcal{N}(t\,|\,\widehat{t}, \beta^{-1})</script><p>​    那么取它的似然函数：</p>
+\mathcal{N}(t\,|\,y(x, w), \beta^{-1})\sim \mathcal{N}(t\,|\,\widehat{t}, \beta^{-1})</script><p>　　那么取它的似然函数：</p>
 <script type="math/tex; mode=display">
 p(\mathbf{t})=\prod_{n=1}^{N}\mathcal{N}(t_{n}\,|\,y(x_{n},w),\beta^{-1})</script><p>　　似然函数为连乘形式，所以我们接着取它的对数函数，由于正态分布是关于$e$的幂函数，所以使用对数函数会产生一个很方便的对数似然形式：</p>
 <script type="math/tex; mode=display">
 ln\;p(\mathbf{t})=-\frac{\beta}{2}\sum_{n=1}^{N}\left\{y(x_{n},w)-t_{n}\right\}^{2}+\frac{N}{2}ln\beta-\frac{N}{2}ln(2\pi)</script><p>　　这个函数后面两项的常数项对于整体的优化没有影响，第一项的系数大小也没有影响，去掉这些项，并在前面加上一个因子$\frac{1}{2}$（为了后续运算方便），于是得到了一个我们非常熟悉的形式：</p>
 <script type="math/tex; mode=display">
 L=\frac{1}{2}\sum_{n=1}^{N}\left\{y(x_{n},w)-t_{n}\right\}^{2}</script><p>　　最大化对数似然函数等价于最小化$L$，$L$一般被称为为平方和误差函数。</p>
-<p>　　所以我们看到了线性回归中的误差函数的由来。我们发现，正态分布直接关联了线性回归中最核心的部分，尽管并没有显式地指出，但线性回归平方和误差函数是以噪声的正态分布为前提条件的。</p>
-<p>　　<strong>其他的正态分布</strong></p>
+<p>　　所以我们看到了线性回归中的误差函数的由来。我们发现，正态分布直接关联了线性回归中最核心的部分，尽管并没有显式地指出，但线性回归平方和误差函数是以噪声的正态分布为前提条件的。<br>​</p>
+<p>　　<strong>其他的正态分布</strong><br>​</p>
 <p>　　我们在上面讨论了正态分布在机器学习中的一个例子，实际上正态分布更加广泛地应用在机器学习当中。比如logistic回归，它隐式的使用了正态分布；L2正则化实际上就是正态分布先验；稀疏核机中的相关向量机也是基于正态分布；更遑论高斯过程、高斯混合模型等等。我会在之后更加具体地讨论这些内容，但是毋庸置疑，正态分布是机器学习的核心内容之一，无论如何强调它的重要性我认为都是不为过的。</p>
   	
 					
@@ -243,7 +243,7 @@ L=\frac{1}{2}\sum_{n=1}^{N}\left\{y(x_{n},w)-t_{n}\right\}^{2}</script><p>　　
   
     <div class="none" id="search">
     <div class="header">
-        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        <input type="text" placeholder="输入你想搜索的" id="search-input" class="input">
         
         <i id="search-cancel" class="iconfont icon-cancel"></i>
     </div>
@@ -259,13 +259,13 @@ L=\frac{1}{2}\sum_{n=1}^{N}\left\{y(x_{n},w)-t_{n}\right\}^{2}</script><p>　　
          
             
 
-            <a class="mobile-menu-link" href="/">Home
+            <a class="mobile-menu-link" href="/">首页
             </a>
             
          
             
 
-            <a class="mobile-menu-link" href="/archives">Archives
+            <a class="mobile-menu-link" href="/archives">归档
             </a>
             
          
