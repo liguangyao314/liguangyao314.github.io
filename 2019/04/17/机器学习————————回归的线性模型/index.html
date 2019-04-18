@@ -73,7 +73,7 @@
 			
 			
 				<i class="iconfont icon-words"></i>
-				<span class="words">2571
+				<span class="words">2558
 				</span>
 			
 		</div>
@@ -113,8 +113,8 @@ y(x,w)=w_{0}+w_{1}x_{1}+...+w_{D}x_{D}</script><p>　　其中$x=(x<em>{1},…,x
 <script type="math/tex; mode=display">
 y(x,w)=w_{0}+\sum_{j=1}^{M-1}w_{j}\phi_{j}(x)</script><p>　　其中$\phi_{j}(x)$被称为基函数（basis function）。这个模型中参数总数为M。</p>
 <a id="more"></a>
-<p>　　参数$w<em>{0}$被称为偏置参数（bias），通常我们定义一个额外的“虚函数”$\phi</em>{0}(x)=1$可以很方便地将原模型写为：</p>
-<script type="math/tex; mode=display">{\usepackage{bm}}
+<p>　　参数$w{0}$被称为偏置参数（bias），通常我们定义一个额外的“虚函数”$\phi_{0}(x)=1$可以很方便地将原模型写为：</p>
+<script type="math/tex; mode=display">
 y(x,w)=\sum_{j=0}^{M-1}w_{j}\phi_{j}(x)=\mathbf{w}^{T}\phi(x)</script><p>其中$\mathbf{w}=(w<em>{0},…,w</em>{M-1})^{T}$且$\phi=(\phi<em>{0},…,\phi</em>{M-1})^{T}$。在很多机器学习的实际应用中，我们会对原始的数据变量进行某种固定形式的预处理或特征抽取，如果原始变量由向量$x$组成，那么特征可以用基函数$\left{\phi_{j}(x)\right}$来表示。</p>
 <p>　　使用非线性基函数，我们能够让函数$y(x,w)$成为输入向量$x$的一个非线性函数，这种函数被称为线性模型，因为它是关于$\mathbf(w)$的线性函数。这可以使得我们能够处理更加一般的数据。</p>
 <h3 id="平方和误差函数"><a href="#平方和误差函数" class="headerlink" title="平方和误差函数"></a>平方和误差函数</h3><p>　　在之前我们讨论过最小化平方和误差函数等价与高斯噪声模型假设下的最大似然解。现在我们回到这里，更加深入地考虑一下它。</p>
@@ -126,7 +126,7 @@ E_{D}(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^{N}\left\{t_{n}-\mathbf{w}^{T}\phi(x_{
 <script type="math/tex; mode=display">
 0=\sum_{n=1}^{N}t_{n}\phi(x_{n})^{T}-\mathbf{w}^{T}(\sum_{n=1}^{N}\phi(x_{n})\phi(x_{n})^{T})</script><p>求解$\mathbf{w}$，我们有：</p>
 <script type="math/tex; mode=display">
-\mathbf{w}_{ML} = (\Phi^{T}\Phi)^{-1}\Phi^{T}\mathbf{t}</script><p>这被称为最小平方问题的规范方程（normal equatioin）。这里$\Phi$是一个$N\timesM$的矩阵，被称为设计矩阵（design matrix），它的元素为$\Phi<em>{nj}=\phi</em>{j}(x_{n})$即：</p>
+\mathbf{w}_{ML} = (\Phi^{T}\Phi)^{-1}\Phi^{T}\mathbf{t}</script><p>这被称为最小平方问题的规范方程（normal equatioin）。这里$\Phi$是一个$N \times M$的矩阵，被称为设计矩阵（design matrix），它的元素为$\Phi<em>{nj}=\phi</em>{j}(x_{n})$即：</p>
 <script type="math/tex; mode=display">
 \Phi=\begin{pmatrix}
 \phi_{0}(x_{1}) & \phi_{1}(x_{1}) & \cdots & \phi_{M-1}(x_{1})\\ 
@@ -153,10 +153,10 @@ t_{1}\\
 t_{2}\\ 
 \vdots\\ 
 t_{N}
-\end{bmatrix}</script><p>根据线性代数的知识（假设各行之间线性无关），我们可以很轻易地判断如果$M=N$可以找到唯一解$\mathbf{w}$，$M&gt;N$有无数解。但是通常情况下$M\llN$，我们不能找到上式的解。我们的目标变为找到上式的一个最优解，也就是求解最小平方和损失。</p>
-<p>　　在几何上来说就是找到目标向量$\mathbf{t}$在列向量$\varphi_{j}$张成的子空间上的正交投影，将这个投影作为新的目标向量。可知当$M\geqN$时，目标向量在列向量的子空间内，所以可以找到确定解；当$M&lt;N$时目标向量$\mathbf{t}$与正交投影之间的的平方欧式距离就是最小平方和误差（相差一个因子$\frac{1}{2}$）。</p>
-<p><img src="/2019/04/17/机器学习————————回归的线性模型/几何解释.jpg" alt="几何解释"></p>
-  	
+\end{bmatrix}</script><p>根据线性代数的知识（假设各行之间线性无关），我们可以很轻易地判断如果$M=N$可以找到唯一解$\mathbf{w}$，$M&gt;N$有无数解。但是通常情况下$M \ll N$，我们不能找到上式的解。我们的目标变为找到上式的一个最优解，也就是求解最小平方和损失。</p>
+<p>　　在几何上来说就是找到目标向量$\mathbf{t}$在列向量$\varphi_{j}$张成的子空间上的正交投影，将这个投影作为新的目标向量。可知当$M \geq N$时，目标向量在列向量的子空间内，所以可以找到确定解；当$M&lt;N$时目标向量$\mathbf{t}$与正交投影之间的的平方欧式距离就是最小平方和误差（相差一个因子$\frac{1}{2}$）。</p>
+<p><img src="/2019/04/17/机器学习————————回归的线性模型/几何解释.png" alt="几何解释"></p>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3>  	
 					
 	  </div>     
 	  
