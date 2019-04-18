@@ -73,7 +73,7 @@
 			
 			
 				<i class="iconfont icon-words"></i>
-				<span class="words">2558
+				<span class="words">2561
 				</span>
 			
 		</div>
@@ -113,9 +113,9 @@ y(x,w)=w_{0}+w_{1}x_{1}+...+w_{D}x_{D}</script><p>　　其中$x=(x<em>{1},…,x
 <script type="math/tex; mode=display">
 y(x,w)=w_{0}+\sum_{j=1}^{M-1}w_{j}\phi_{j}(x)</script><p>　　其中$\phi_{j}(x)$被称为基函数（basis function）。这个模型中参数总数为M。</p>
 <a id="more"></a>
-<p>　　参数$w{0}$被称为偏置参数（bias），通常我们定义一个额外的“虚函数”$\phi_{0}(x)=1$可以很方便地将原模型写为：</p>
+<p>　　参数$w<em>{0}$被称为偏置参数（bias），通常我们定义一个额外的“虚函数”$\phi</em>{0}(x)=1$可以很方便地将原模型写为：</p>
 <script type="math/tex; mode=display">
-y(x,w)=\sum_{j=0}^{M-1}w_{j}\phi_{j}(x)=\mathbf{w}^{T}\phi(x)</script><p>其中$\mathbf{w}=(w<em>{0},…,w</em>{M-1})^{T}$且$\phi=(\phi<em>{0},…,\phi</em>{M-1})^{T}$。在很多机器学习的实际应用中，我们会对原始的数据变量进行某种固定形式的预处理或特征抽取，如果原始变量由向量$x$组成，那么特征可以用基函数$\left{\phi_{j}(x)\right}$来表示。</p>
+y(x,w)=\sum_{j=0}^{M-1}w_{j}\phi_{j}(x)=\mathbf{w}^{T}\phi(x)</script><p>其中$\mathbf{w}=(w_{0},…,w_{M-1})^{T}$且$\phi=(\phi_{0},…,\phi_{M-1})^{T}$。在很多机器学习的实际应用中，我们会对原始的数据变量进行某种固定形式的预处理或特征抽取，如果原始变量由向量$x$组成，那么特征可以用基函数$\left{\phi_{j}(x)\right}$来表示。</p>
 <p>　　使用非线性基函数，我们能够让函数$y(x,w)$成为输入向量$x$的一个非线性函数，这种函数被称为线性模型，因为它是关于$\mathbf(w)$的线性函数。这可以使得我们能够处理更加一般的数据。</p>
 <h3 id="平方和误差函数"><a href="#平方和误差函数" class="headerlink" title="平方和误差函数"></a>平方和误差函数</h3><p>　　在之前我们讨论过最小化平方和误差函数等价与高斯噪声模型假设下的最大似然解。现在我们回到这里，更加深入地考虑一下它。</p>
 <p>　　我们使用基函数代替前面的$x_{n}$，平方和误差函数为：</p>
