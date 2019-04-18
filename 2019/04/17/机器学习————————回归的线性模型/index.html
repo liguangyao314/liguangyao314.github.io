@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  
+  
+  <title>  机器学习————————回归的线性模型 |   Jacobi </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+
+
+  <link rel="stylesheet" href="/nayo.min.css"> 
+</head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link" id="menu-home" href="/">
+          <i class="iconfont icon-home">
+        </i></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link" id="menu-archives" href="/archives">
+          <i class="iconfont icon-archives">
+        </i></a>
+      </li>
+      
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			机器学习————————回归的线性模型
+		</p>
+		<div class="info">	
+			<time>
+				Apr 17, 2019
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">2571
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h2 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h2><p>　　线性模型是最基本的机器学习算法。它作为最简单的模型之一，在实际中并不常用，但是我们还是有必要讨论一下它。通过对线性模型的讨论可以引出机器学习中一些比较核心的理论与方法，并且由于它足够简单，我们可以把目光集中在引申出的问题上面。</p>
+<p>　　回归问题最简单的模型是输入变量的线性组合:</p>
+<script type="math/tex; mode=display">
+y(x,w)=w_{0}+w_{1}x_{1}+...+w_{D}x_{D}</script><p>　　其中$x=(x<em>{1},…,x</em>{D})^{T}$。这通常被简单地称为线性回归，它是关于参数$w<em>{0},…,w</em>{D}$的一个线性函数，同时它也是关于输入变量$x_{i}$的一个线性函数。这给模型带来了极大的局限性，它无法表示非线性的函数。因此我们这样来扩展模型的能力：将输入变量的固定的非线性函数进行线性组合，形式为：</p>
+<script type="math/tex; mode=display">
+y(x,w)=w_{0}+\sum_{j=1}^{M-1}w_{j}\phi_{j}(x)</script><p>　　其中$\phi_{j}(x)$被称为基函数（basis function）。这个模型中参数总数为M。</p>
+<a id="more"></a>
+<p>　　参数$w<em>{0}$被称为偏置参数（bias），通常我们定义一个额外的“虚函数”$\phi</em>{0}(x)=1$可以很方便地将原模型写为：</p>
+<script type="math/tex; mode=display">{\usepackage{bm}}
+y(x,w)=\sum_{j=0}^{M-1}w_{j}\phi_{j}(x)=\mathbf{w}^{T}\phi(x)</script><p>其中$\mathbf{w}=(w<em>{0},…,w</em>{M-1})^{T}$且$\phi=(\phi<em>{0},…,\phi</em>{M-1})^{T}$。在很多机器学习的实际应用中，我们会对原始的数据变量进行某种固定形式的预处理或特征抽取，如果原始变量由向量$x$组成，那么特征可以用基函数$\left{\phi_{j}(x)\right}$来表示。</p>
+<p>　　使用非线性基函数，我们能够让函数$y(x,w)$成为输入向量$x$的一个非线性函数，这种函数被称为线性模型，因为它是关于$\mathbf(w)$的线性函数。这可以使得我们能够处理更加一般的数据。</p>
+<h3 id="平方和误差函数"><a href="#平方和误差函数" class="headerlink" title="平方和误差函数"></a>平方和误差函数</h3><p>　　在之前我们讨论过最小化平方和误差函数等价与高斯噪声模型假设下的最大似然解。现在我们回到这里，更加深入地考虑一下它。</p>
+<p>　　我们使用基函数代替前面的$x_{n}$，平方和误差函数为：</p>
+<script type="math/tex; mode=display">
+E_{D}(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^{N}\left\{t_{n}-\mathbf{w}^{T}\phi(x_{n})\right\}^{2}</script><p>　　我们来解析地解出$\mathbf{w}$的解，求误差函数对于$\mathbf{w}$的导数：</p>
+<script type="math/tex; mode=display">
+\triangledown E_{D}(\mathbf{w}) = \sum_{n=1}^{N}\left\{t_{n}-\mathbf{w}^{T}\phi(x_{n})\right\}\phi(x_{n})^{T}</script><p>令其为零，可得：</p>
+<script type="math/tex; mode=display">
+0=\sum_{n=1}^{N}t_{n}\phi(x_{n})^{T}-\mathbf{w}^{T}(\sum_{n=1}^{N}\phi(x_{n})\phi(x_{n})^{T})</script><p>求解$\mathbf{w}$，我们有：</p>
+<script type="math/tex; mode=display">
+\mathbf{w}_{ML} = (\Phi^{T}\Phi)^{-1}\Phi^{T}\mathbf{t}</script><p>这被称为最小平方问题的规范方程（normal equatioin）。这里$\Phi$是一个$N\timesM$的矩阵，被称为设计矩阵（design matrix），它的元素为$\Phi<em>{nj}=\phi</em>{j}(x_{n})$即：</p>
+<script type="math/tex; mode=display">
+\Phi=\begin{pmatrix}
+\phi_{0}(x_{1}) & \phi_{1}(x_{1}) & \cdots & \phi_{M-1}(x_{1})\\ 
+\phi_{0}(x_{2}) & \phi_{1}(x_{2}) & \cdots & \phi_{M-1}(x_{2})\\ 
+\vdots & \vdots & \ddots & \vdots\\ 
+\phi_{0}(x_{N}) & \phi_{1}(x_{N}) & \cdots & \phi_{M-1}(x_{N})
+\end{pmatrix}</script><p>这个形式有一个很形象的几何解释。我们考虑一个$N$维空间，它的坐标轴有$t<em>{n}$给出，即$\mathbf{t}=\left{t</em>{1},…,t<em>{N}\right}^{T}$是这个空间的一个向量。将$\Phi$的列向量记作 $\varphi</em>{j}$。</p>
+<p>　　重新考虑我们的数据集，我们希望找到参数向量$\mathbf{w}$使得：</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+\phi_{0}(x_{1}) & \phi_{1}(x_{1}) & \cdots & \phi_{M-1}(x_{1})\\ 
+\phi_{0}(x_{2}) & \phi_{1}(x_{2}) & \cdots & \phi_{M-1}(x_{2})\\ 
+\vdots & \vdots & \ddots & \vdots\\ 
+\phi_{0}(x_{N}) & \phi_{1}(x_{N}) & \cdots & \phi_{M-1}(x_{N})
+\end{pmatrix}
+\begin{bmatrix}
+w_{0}\\ 
+w_{1}\\ 
+\vdots\\ 
+w_{M-1}
+\end{bmatrix}=
+\begin{bmatrix}
+t_{1}\\ 
+t_{2}\\ 
+\vdots\\ 
+t_{N}
+\end{bmatrix}</script><p>根据线性代数的知识（假设各行之间线性无关），我们可以很轻易地判断如果$M=N$可以找到唯一解$\mathbf{w}$，$M&gt;N$有无数解。但是通常情况下$M\llN$，我们不能找到上式的解。我们的目标变为找到上式的一个最优解，也就是求解最小平方和损失。</p>
+<p>　　在几何上来说就是找到目标向量$\mathbf{t}$在列向量$\varphi_{j}$张成的子空间上的正交投影，将这个投影作为新的目标向量。可知当$M\geqN$时，目标向量在列向量的子空间内，所以可以找到确定解；当$M&lt;N$时目标向量$\mathbf{t}$与正交投影之间的的平方欧式距离就是最小平方和误差（相差一个因子$\frac{1}{2}$）。</p>
+<p><img src="/2019/04/17/机器学习————————回归的线性模型/几何解释.jpg" alt="几何解释"></p>
+  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-link" href="/tags/线性回归，正则化/">线性回归，正则化</a>
+      
+    </div>
+
+    <div class="operate">
+      
+      <span class="text">Share</span>
+      <ul class="share">
+	   			             
+        <li class="iconfont 
+		icon-share-qq 
+		-mob-share-qq 
+		item"></li>		
+   	   			             
+        <li class="iconfont 
+		icon-share-weixin 
+		-mob-share-weixin 
+		item"></li>		
+   	   			             
+        <li class="iconfont 
+		icon-share-weibo 
+		-mob-share-weibo 
+		item"></li>		
+   	   
+</ul>	
+
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=21d601593a1de"></script>
+      
+    </div>
+  </div>
+
+
+  
+  <nav class="nav">
+    <div class="link">
+      
+      <a href="/2019/04/13/机器学习————————正态分布/" class="link-wrap">
+        <strong class="caption">older</strong>
+        
+        <span class="title">
+          机器学习————————正态分布
+        </span>
+      </a>
+      
+    </div>
+    <div class="link">
+      
+    </div>
+  </nav>
+  
+</div> 
+	
+<div class="comment">
+
+    
+
+    <div id="comment">
+    </div>
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+    <script src="//unpkg.com/valine@v1.1.8-beta/dist/Valine.min.js"></script>
+
+    <script>
+        new Valine({
+            el: '#comment',
+            notify: false,
+            verify: false,
+            app_id: 'drY43zo5UYAEbaw3cEog0GtX-gzGzoHsz',
+            app_key: 'UKsTLxEoDbfJQmNVfyweAO4X',
+            path: window.location.pathname,
+            avatar: 'mm',
+            guest_info: ['nick', 'mail']
+        });
+    </script>
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon" src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+      
+</div>
+        
+    
+
+
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			&copy;
+			
+			2019
+			Jacobi
+
+			<br>
+		</div>
+	</div>
+</footer>   
+
+    <script src="/nayo.bundle.js"></script>           
+  </body>        
+</html>
